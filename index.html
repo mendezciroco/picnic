@@ -11,6 +11,7 @@
   <meta property="og:title" content="Picnic — Trelew">
   <meta property="og:description" content="Hamburguesas, lomitos, bondiolas, choripán, panchos y papas. Abrimos el 1 de diciembre en A. Mathews 144.">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://mendezciroco.github.io/picnic/img/combo.webp">
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
 
@@ -41,7 +42,7 @@
       --logo-letras: #ffe11a;
       --logo-contorno: #0d0d0d;
       --logo-fondo: #0d0d0d;
-      --hero-fondo: radial-gradient(ellipse at 50% 30%, #2a0d0f 0%, #0d0d0d 65%);
+      --hero-capa: linear-gradient(180deg, rgba(13,13,13,.55) 0%, rgba(13,13,13,.72) 60%, #0d0d0d 100%);
       --banda: #c8171e;
       --barra-fondo: rgba(13, 13, 13, 0.92);
       --sombra: 0 10px 30px rgba(0, 0, 0, 0.45);
@@ -50,7 +51,7 @@
 
     /* ===== BASE ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; scroll-padding-top: 120px; }
+    html { scroll-behavior: smooth; scroll-padding-top: 70px; }
     body {
       font-family: 'Inter', system-ui, sans-serif;
       background: var(--fondo);
@@ -119,6 +120,8 @@
       -webkit-text-stroke: 1px var(--logo-contorno);
       paint-order: stroke fill;
     }
+    .nav .nav-marca { display: flex; align-items: center; gap: 10px; }
+    .nav-logo { width: 40px; height: 40px; object-fit: contain; }
     .nav-links { display: flex; gap: 18px; list-style: none; }
     .nav-links a {
       text-decoration: none; font-size: 0.85rem; font-weight: 600;
@@ -128,67 +131,43 @@
 
     /* ===== HERO ===== */
     .hero {
-      background: var(--hero-fondo);
+      position: relative;
+      min-height: calc(100svh - 56px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
       text-align: center;
-      padding: 36px 0 0;
+      padding: 40px 0 70px;
       overflow: hidden;
+      /* --hero-capa oscurece la foto para que el logo se lea bien */
+      background:
+        var(--hero-capa),
+        url("img/hamburguesa.webp") center 40% / cover no-repeat,
+        var(--fondo);
     }
     .logo {
-      width: min(78vw, 340px);
+      width: min(74vw, 360px);
+      height: auto;
       margin: 0 auto;
-      filter: drop-shadow(0 12px 30px rgba(0,0,0,.35));
+      filter: drop-shadow(0 14px 34px rgba(0,0,0,.6));
       animation: entrar .9s cubic-bezier(.2,.8,.2,1) both;
     }
-    .logo .anillo { stroke: var(--logo-anillo); }
-    .logo .txt-anillo { fill: var(--logo-texto-anillo); }
-    .logo .icono { stroke: var(--logo-anillo); }
-    .logo .estrella { fill: var(--logo-letras); }
-    .logo .fondo-logo { fill: var(--logo-fondo); }
-    .logo .marca {
-      fill: var(--logo-letras);
-      stroke: var(--logo-contorno);
-      stroke-width: 7px;
-      paint-order: stroke fill;
-      stroke-linejoin: round;
+    .bajar {
+      position: absolute; left: 50%; bottom: 22px;
+      transform: translateX(-50%);
+      width: 42px; height: 42px; border-radius: 50%;
+      display: grid; place-items: center;
+      border: 1px solid rgba(255,255,255,.35);
+      color: #fff; text-decoration: none; font-size: 1.1rem;
+      animation: flotar 2s ease-in-out infinite;
     }
     .hero-sub {
       margin: 18px auto 0;
       max-width: 420px;
       padding: 0 18px;
-      color: var(--texto-suave);
-      font-size: 1rem;
+      color: #e6e6e6;
+      font-size: 1.05rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,.7);
     }
 
-    .banda {
-      margin-top: 32px;
-      background: var(--banda);
-      color: var(--texto-sobre-rojo);
-      padding: 26px 0 30px;
-      position: relative;
-    }
-    .banda .titulo-banda {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.7rem, 7vw, 2.3rem);
-      letter-spacing: 1px;
-      line-height: 1.05;
-    }
-    .cuenta {
-      display: flex; justify-content: center; gap: 10px;
-      margin: 16px 0 18px;
-    }
-    .cuenta div {
-      background: rgba(0,0,0,.28);
-      border-radius: 10px;
-      width: 68px;
-      padding: 8px 0 6px;
-    }
-    .cuenta strong {
-      display: block;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.2rem; line-height: 1;
-      font-weight: 400;
-    }
-    .cuenta span { font-size: 0.62rem; letter-spacing: 1.5px; text-transform: uppercase; opacity: .85; }
 
     .boton {
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -209,45 +188,11 @@
       border: 2px solid var(--borde);
       box-shadow: none;
     }
-    .retiro {
-      display: inline-flex; align-items: center; gap: 6px;
-      margin-top: 14px;
-      font-size: 0.82rem; font-weight: 600; opacity: .95;
-    }
 
     /* ===== MENÚ ===== */
     .menu-cabecera { text-align: center; margin-bottom: 22px; }
     .menu-cabecera p { color: var(--texto-suave); margin-top: 8px; font-size: .95rem; }
 
-    /* Botonera de categorías: se desliza de costado en el celular y queda pegada arriba */
-    .chips {
-      position: sticky; top: 56px; z-index: 40;
-      background: var(--barra-fondo);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      display: flex; gap: 8px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scroll-padding-inline: 18px;
-      padding: 10px 18px;
-      margin: 0 -18px 28px;
-      scrollbar-width: none;
-      border-bottom: 1px solid var(--borde);
-    }
-    .chips::-webkit-scrollbar { display: none; }
-    .chip {
-      scroll-snap-align: start;
-      flex: 0 0 auto;
-      text-decoration: none;
-      font-size: 0.85rem; font-weight: 600;
-      padding: 8px 16px;
-      border-radius: 999px;
-      border: 1px solid var(--borde);
-      color: var(--texto-suave);
-      background: var(--superficie);
-      transition: all .2s;
-    }
-    .chip.activo { background: var(--rojo); border-color: var(--rojo); color: var(--texto-sobre-rojo); }
 
     .categoria { margin-bottom: 40px; }
     .categoria-titulo {
@@ -293,6 +238,15 @@
     /* ===== NOSOTROS ===== */
     .nosotros { background: var(--superficie); }
     .nosotros-texto p { color: var(--texto-suave); margin-top: 14px; max-width: 560px; }
+    .nosotros-grid { display: grid; gap: 28px; align-items: center; }
+    .nosotros-foto {
+      margin: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--borde);
+      box-shadow: var(--sombra);
+    }
+    .nosotros-foto img { width: 100%; height: auto; aspect-ratio: 960 / 1092; object-fit: cover; }
     .pasos { display: grid; gap: 12px; margin-top: 30px; counter-reset: paso; }
     .paso {
       display: flex; gap: 14px; align-items: flex-start;
@@ -359,12 +313,13 @@
     .barra-movil a.principal { background: var(--rojo); border-color: var(--rojo); color: var(--texto-sobre-rojo); }
 
     /* ===== ANIMACIONES ===== */
+    @keyframes flotar { 0%,100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 6px); } }
     @keyframes entrar { from { opacity: 0; transform: scale(.85) rotate(-6deg); } to { opacity: 1; transform: none; } }
     .revelar { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
     .revelar.visible { opacity: 1; transform: none; }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      .logo { animation: none; }
+      .logo, .bajar { animation: none; }
       .revelar { opacity: 1; transform: none; transition: none; }
     }
 
@@ -372,7 +327,6 @@
     @media (max-width: 380px) {
       .nav-links { gap: 12px; }
       .nav-links a { font-size: .78rem; }
-      .cuenta div { width: 60px; }
     }
 
     /* ===== PC (segundo plano por ahora) ===== */
@@ -380,9 +334,10 @@
       body { padding-bottom: 0; }
       .barra-movil { display: none; }
       section { padding: 90px 0; }
-      .chips { justify-content: center; margin: 0 0 34px; border-radius: 999px; border: 1px solid var(--borde); }
       .platos { grid-template-columns: 1fr 1fr; }
       .pasos { grid-template-columns: repeat(3, 1fr); }
+      .nosotros-grid { grid-template-columns: 1.2fr 1fr; gap: 48px; }
+      .nosotros-foto { max-width: 440px; justify-self: end; }
       .ubicacion-grid { grid-template-columns: 1.4fr 1fr; align-items: stretch; }
       .mapa { height: 100%; min-height: 340px; }
       .contacto-botones { grid-template-columns: 1fr 1fr; max-width: 520px; }
@@ -394,7 +349,7 @@
   <!-- ===== NAV ===== -->
   <nav class="nav">
     <div class="contenedor">
-      <a href="#inicio" class="nav-marca">PiCNiC</a>
+      <a href="#inicio" class="nav-marca"><img src="img/logo.webp" alt="" class="nav-logo" width="40" height="40">PiCNiC</a>
       <ul class="nav-links">
         <li><a href="#menu">Menú</a></li>
         <li><a href="#nosotros">Nosotros</a></li>
@@ -405,62 +360,10 @@
 
   <!-- ===== HERO: LOGO + APERTURA ===== -->
   <header class="hero" id="inicio">
-    <!-- Logo redibujado a partir de la foto. Reemplazar por el archivo original cuando lo tengamos. -->
-    <svg class="logo" viewBox="0 0 300 300" role="img" aria-label="Logo de Picnic">
-      <defs>
-        <path id="arcoArriba" d="M 46,150 A 104,104 0 0 1 254,150" />
-        <path id="arcoAbajo"  d="M 26,150 A 124,124 0 0 0 274,150" />
-      </defs>
-      <circle class="fondo-logo" cx="150" cy="150" r="146" />
-      <circle class="anillo" cx="150" cy="150" r="140" fill="none" stroke-width="3" />
-      <circle class="anillo" cx="150" cy="150" r="98"  fill="none" stroke-width="2.5" />
-
-      <text class="txt-anillo" font-family="Bebas Neue, sans-serif" font-size="21" letter-spacing="2.5">
-        <textPath href="#arcoArriba" startOffset="50%" text-anchor="middle" textLength="270" lengthAdjust="spacingAndGlyphs">PAPAS FRITAS · PANCHOS · LOMITOS</textPath>
-      </text>
-      <text class="txt-anillo" font-family="Bebas Neue, sans-serif" font-size="21" letter-spacing="2.5">
-        <textPath href="#arcoAbajo" startOffset="50%" text-anchor="middle" textLength="320" lengthAdjust="spacingAndGlyphs">HAMBURGUESAS · BONDIOLAS · CHORIPÁN</textPath>
-      </text>
-
-      <!-- estrellitas a los costados -->
-      <text class="estrella" x="20" y="157" font-size="16">★</text>
-      <text class="estrella" x="266" y="157" font-size="16">★</text>
-
-      <!-- PiCNiC -->
-      <text class="marca" x="150" y="138" text-anchor="middle" font-family="Luckiest Guy, cursive" font-size="58" transform="rotate(-5 150 120)">PiCNiC</text>
-
-      <text class="txt-anillo" x="96" y="168" text-anchor="middle" font-family="Bebas Neue, sans-serif" font-size="13" letter-spacing="1" style="fill: var(--texto)">A. MATHEWS 144</text>
-      <text class="txt-anillo" x="208" y="168" text-anchor="middle" font-family="Bebas Neue, sans-serif" font-size="13" letter-spacing="1" style="fill: var(--texto)">TRELEW</text>
-
-      <!-- hamburguesa -->
-      <g class="icono" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M 112,202 Q 112,180 138,180 Q 164,180 164,202 Z" />
-        <path d="M 110,208 q 6,-4 9,0 t 9,0 t 9,0 t 9,0 t 9,0 t 9,0" />
-        <rect x="112" y="212" width="52" height="8" rx="4" />
-        <path d="M 112,224 L 164,224 Q 164,234 152,234 L 124,234 Q 112,234 112,224 Z" />
-      </g>
-      <!-- papas -->
-      <g class="icono" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M 176,198 L 182,236 L 202,236 L 208,198 Z" />
-        <path d="M 182,198 L 180,180 M 189,198 L 188,174 M 196,198 L 197,176 M 203,198 L 206,182" />
-      </g>
-    </svg>
+    <img class="logo" src="img/logo.webp" alt="Picnic — Hamburguesas, lomitos, bondiolas, choripán, panchos y papas. A. Mathews 144, Trelew" width="800" height="800">
 
     <p class="hero-sub">Hamburguesas, lomitos, bondiolas, choripán, panchos y papas. Rico, rápido y hecho en el momento.</p>
-
-    <div class="banda">
-      <div class="contenedor">
-        <p class="titulo-banda" id="titulo-apertura">Abrimos el 1° de diciembre</p>
-        <div class="cuenta" id="cuenta" aria-live="polite">
-          <div><strong id="dias">--</strong><span>días</span></div>
-          <div><strong id="horas">--</strong><span>horas</span></div>
-          <div><strong id="minutos">--</strong><span>min</span></div>
-          <div><strong id="segundos">--</strong><span>seg</span></div>
-        </div>
-        <a href="#menu" class="boton">Ver el menú ↓</a>
-        <div><span class="retiro">🛍️ Retiro en el local · A. Mathews 144</span></div>
-      </div>
-    </div>
+    <a href="#menu" class="bajar" aria-label="Bajar al menú">↓</a>
   </header>
 
   <main>
@@ -473,14 +376,6 @@
           <p>Pedís en el mostrador, te damos tu beeper y cuando vibra, pasás a buscar.</p>
         </div>
 
-        <nav class="chips" aria-label="Categorías del menú">
-          <a class="chip" href="#hamburguesas">🍔 Hamburguesas</a>
-          <a class="chip" href="#lomitos">🥖 Lomitos</a>
-          <a class="chip" href="#bondiolas">🥩 Bondiolas</a>
-          <a class="chip" href="#choripan">🔥 Choripán</a>
-          <a class="chip" href="#panchos">🌭 Panchos</a>
-          <a class="chip" href="#papas">🍟 Papas</a>
-        </nav>
 
         <!-- Hamburguesas -->
         <div class="categoria revelar" id="hamburguesas">
@@ -599,10 +494,15 @@
     <!-- ===== NOSOTROS ===== -->
     <section class="nosotros" id="nosotros">
       <div class="contenedor">
+        <div class="nosotros-grid">
         <div class="nosotros-texto revelar">
           <p class="eyebrow">Nosotros</p>
           <h2>Comida de <span class="acento">picnic</span>, sin vueltas</h2>
           <p>Picnic nace en Trelew con una idea simple: lo que pedís sale rápido, sale caliente y sale bien. Carne a la plancha, pan fresco y porciones que se sienten, para llevar a casa, a la plaza o adonde vos quieras armar tu picnic.</p>
+        </div>
+          <figure class="nosotros-foto revelar">
+            <img src="img/combo.webp" alt="Combo Picnic: hamburguesas envueltas, papas fritas y gaseosas con los stickers del local" width="960" height="1092" loading="lazy">
+          </figure>
         </div>
 
         <div class="pasos">
@@ -688,43 +588,6 @@
   </div>
 
   <script>
-    // ===== CUENTA REGRESIVA =====
-    // 1 de diciembre de 2026, 00:00 hora de Argentina (UTC-3)
-    const apertura = new Date('2026-12-01T00:00:00-03:00').getTime();
-    const dos = n => String(n).padStart(2, '0');
-
-    function actualizarCuenta() {
-      const falta = apertura - Date.now();
-      if (falta <= 0) {
-        document.getElementById('cuenta').style.display = 'none';
-        document.getElementById('titulo-apertura').textContent = '¡Ya estamos abiertos!';
-        clearInterval(reloj);
-        return;
-      }
-      const s = Math.floor(falta / 1000);
-      document.getElementById('dias').textContent = Math.floor(s / 86400);
-      document.getElementById('horas').textContent = dos(Math.floor(s % 86400 / 3600));
-      document.getElementById('minutos').textContent = dos(Math.floor(s % 3600 / 60));
-      document.getElementById('segundos').textContent = dos(s % 60);
-    }
-    const reloj = setInterval(actualizarCuenta, 1000);
-    actualizarCuenta();
-
-    // ===== CATEGORÍA ACTIVA EN LA BOTONERA =====
-    const chips = document.querySelectorAll('.chip');
-    const categorias = document.querySelectorAll('.categoria');
-    const marcarChip = new IntersectionObserver(entradas => {
-      entradas.forEach(e => {
-        if (!e.isIntersecting) return;
-        chips.forEach(c => {
-          const activo = c.getAttribute('href') === '#' + e.target.id;
-          c.classList.toggle('activo', activo);
-          if (activo) c.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
-        });
-      });
-    }, { rootMargin: '-45% 0px -50% 0px' });
-    categorias.forEach(c => marcarChip.observe(c));
-
     // ===== APARECER AL HACER SCROLL =====
     const aparecer = new IntersectionObserver(entradas => {
       entradas.forEach(e => {
