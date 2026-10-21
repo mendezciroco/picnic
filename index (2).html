@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Picnic — Hamburguesas, lomitos y más en Trelew</title>
+  <meta name="description" content="Picnic: hamburguesas, lomitos, bondiolas, choripán, panchos y papas fritas en A. Mathews 144, Trelew. Abrimos el 1 de diciembre. Retiro en el local.">
+  <meta name="theme-color" content="#0d0d0d">
+
+  <!-- Vista previa cuando se comparte el link por WhatsApp -->
+  <meta property="og:title" content="Picnic — Trelew">
+  <meta property="og:description" content="Hamburguesas, lomitos, bondiolas, choripán, panchos y papas. Abrimos el 1 de diciembre en A. Mathews 144.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://mendezciroco.github.io/picnic/img/combo.webp">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Luckiest+Guy&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       TEMA: acá están TODOS los colores de la página.
+       Para cambiar la paleta, solo se toca este bloque.
+       ========================================================= */
+    /*TEMA-INICIO*/
+    :root {
+      --fondo: #0d0d0d;          /* negro del logo */
+      --superficie: #161616;     /* tarjetas */
+      --superficie-2: #1f1f1f;
+      --borde: #2b2b2b;
+      --rojo: #c8171e;           /* rojo del logo y del pager */
+      --rojo-oscuro: #8e0f14;
+      --amarillo: #ffe11a;       /* amarillo de "PiCNiC" */
+      --acento-texto: #ffe11a;   /* precios y palabras destacadas */
+      --texto: #f4f4f4;
+      --texto-suave: #b4b4b4;
+      --texto-sobre-rojo: #ffffff;
+      --logo-anillo: #c8171e;
+      --logo-texto-anillo: #c8171e;
+      --logo-letras: #ffe11a;
+      --logo-contorno: #0d0d0d;
+      --logo-fondo: #0d0d0d;
+      --hero-capa: linear-gradient(180deg, rgba(13,13,13,.55) 0%, rgba(13,13,13,.72) 60%, #0d0d0d 100%);
+      --banda: #c8171e;
+      --barra-fondo: rgba(13, 13, 13, 0.92);
+      --sombra: 0 10px 30px rgba(0, 0, 0, 0.45);
+    }
+    /*TEMA-FIN*/
+
+    /* ===== BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--fondo);
+      color: var(--texto);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 76px; /* lugar para la barra de abajo en el celu */
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; }
+
+    .contenedor { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 18px; }
+
+    h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: clamp(2.6rem, 9vw, 3.6rem);
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+    h2 .acento { color: var(--acento-texto); }
+    .eyebrow {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--rojo);
+      margin-bottom: 8px;
+    }
+    section { padding: 64px 0; }
+
+    /* Etiqueta para datos que todavía faltan */
+    .falta {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--acento-texto);
+      border: 1px dashed var(--acento-texto);
+      border-radius: 4px;
+      padding: 1px 6px;
+      vertical-align: middle;
+      margin-left: 6px;
+      white-space: nowrap;
+    }
+
+    /* ===== NAV SUPERIOR ===== */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--barra-fondo);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--borde);
+    }
+    .nav .contenedor {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 56px;
+    }
+    .nav-marca {
+      font-family: 'Luckiest Guy', cursive;
+      font-size: 1.5rem;
+      color: var(--logo-letras);
+      text-decoration: none;
+      letter-spacing: 1px;
+      -webkit-text-stroke: 1px var(--logo-contorno);
+      paint-order: stroke fill;
+    }
+    .nav .nav-marca { display: flex; align-items: center; gap: 10px; }
+    .nav-logo { width: 40px; height: 40px; object-fit: contain; }
+    .nav-links { display: flex; gap: 18px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; font-size: 0.85rem; font-weight: 600;
+      color: var(--texto-suave); transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--texto); }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      min-height: calc(100svh - 56px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 40px 0 70px;
+      overflow: hidden;
+      /* --hero-capa oscurece la foto para que el logo se lea bien */
+      background:
+        var(--hero-capa),
+        url("img/hamburguesa.webp") center 40% / cover no-repeat,
+        var(--fondo);
+    }
+    .logo {
+      width: min(74vw, 360px);
+      height: auto;
+      margin: 0 auto;
+      filter: drop-shadow(0 14px 34px rgba(0,0,0,.6));
+      animation: entrar .9s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .bajar {
+      position: absolute; left: 50%; bottom: 22px;
+      transform: translateX(-50%);
+      width: 42px; height: 42px; border-radius: 50%;
+      display: grid; place-items: center;
+      border: 1px solid rgba(255,255,255,.35);
+      color: #fff; text-decoration: none; font-size: 1.1rem;
+      animation: flotar 2s ease-in-out infinite;
+    }
+    .hero-sub {
+      margin: 18px auto 0;
+      max-width: 420px;
+      padding: 0 18px;
+      color: #e6e6e6;
+      font-size: 1.05rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,.7);
+    }
+
+
+    .boton {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      font-weight: 700; font-size: 0.95rem;
+      text-decoration: none;
+      padding: 14px 26px;
+      border-radius: 999px;
+      background: var(--amarillo);
+      color: #111;
+      transition: transform .15s, box-shadow .15s;
+      box-shadow: 0 6px 18px rgba(0,0,0,.25);
+    }
+    .boton:active { transform: scale(.97); }
+    .boton:hover { transform: translateY(-2px); }
+    .boton-linea {
+      background: transparent;
+      color: var(--texto);
+      border: 2px solid var(--borde);
+      box-shadow: none;
+    }
+
+    /* ===== MENÚ ===== */
+    .menu-cabecera { text-align: center; margin-bottom: 22px; }
+    .menu-cabecera p { color: var(--texto-suave); margin-top: 8px; font-size: .95rem; }
+
+
+    .categoria { margin-bottom: 40px; }
+    .categoria-titulo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem; letter-spacing: 1px;
+      margin-bottom: 14px;
+    }
+    .categoria-titulo::after {
+      content: ""; flex: 1; height: 2px;
+      background: linear-gradient(90deg, var(--rojo), transparent);
+    }
+    .categoria-titulo .emoji { font-size: 1.5rem; }
+
+    .platos { display: grid; gap: 12px; }
+    .plato {
+      background: var(--superficie);
+      border: 1px solid var(--borde);
+      border-radius: 14px;
+      padding: 16px 16px 14px;
+      position: relative;
+    }
+    .plato.destacado { border-color: var(--rojo); }
+    .plato-cabeza { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+    .plato h3 { font-size: 1.05rem; font-weight: 700; line-height: 1.25; }
+    .precio {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.55rem; color: var(--acento-texto);
+      white-space: nowrap; line-height: 1;
+    }
+    .plato p { color: var(--texto-suave); font-size: 0.88rem; margin-top: 6px; }
+    .sello {
+      display: inline-block;
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      background: var(--rojo); color: var(--texto-sobre-rojo);
+      border-radius: 4px; padding: 2px 7px; margin-bottom: 8px;
+    }
+    .aviso-precios {
+      text-align: center; font-size: .8rem; color: var(--texto-suave);
+      border: 1px dashed var(--borde); border-radius: 10px; padding: 12px;
+    }
+
+    /* ===== NOSOTROS ===== */
+    .nosotros { background: var(--superficie); }
+    .nosotros-texto p { color: var(--texto-suave); margin-top: 14px; max-width: 560px; }
+    .nosotros-grid { display: grid; gap: 28px; align-items: center; }
+    .nosotros-foto {
+      margin: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--borde);
+      box-shadow: var(--sombra);
+    }
+    .nosotros-foto img { width: 100%; height: auto; aspect-ratio: 960 / 1092; object-fit: cover; }
+    .pasos { display: grid; gap: 12px; margin-top: 30px; counter-reset: paso; }
+    .paso {
+      display: flex; gap: 14px; align-items: flex-start;
+      background: var(--fondo);
+      border: 1px solid var(--borde);
+      border-radius: 14px; padding: 16px;
+    }
+    .paso-num {
+      flex: 0 0 44px; height: 44px; border-radius: 50%;
+      background: var(--rojo); color: var(--texto-sobre-rojo);
+      display: grid; place-items: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
+    }
+    .paso h3 { font-size: 1rem; }
+    .paso p { color: var(--texto-suave); font-size: .88rem; margin-top: 2px; }
+
+    /* ===== UBICACIÓN ===== */
+    .ubicacion-grid { display: grid; gap: 18px; margin-top: 24px; }
+    .mapa {
+      width: 100%; height: 280px; border: 0; border-radius: 14px;
+      background: var(--superficie-2);
+    }
+    .datos { display: grid; gap: 10px; }
+    .dato {
+      display: flex; gap: 14px; align-items: center;
+      background: var(--superficie);
+      border: 1px solid var(--borde);
+      border-radius: 14px; padding: 14px 16px;
+    }
+    .dato .ico { font-size: 1.4rem; flex: 0 0 auto; }
+    .dato small { display: block; font-size: .7rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--texto-suave); }
+    .dato strong { font-weight: 600; }
+
+    /* ===== CONTACTO ===== */
+    .contacto { text-align: center; background: var(--superficie); }
+    .contacto p { color: var(--texto-suave); margin: 12px auto 24px; max-width: 420px; }
+    .contacto-botones { display: grid; gap: 12px; max-width: 360px; margin: 0 auto; }
+    .contacto .boton { width: 100%; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center; padding: 34px 0 30px;
+      font-size: .8rem; color: var(--texto-suave);
+      border-top: 1px solid var(--borde);
+    }
+    footer .nav-marca { font-size: 1.8rem; display: inline-block; margin-bottom: 6px; }
+
+    /* ===== BARRA FIJA ABAJO (solo celular) ===== */
+    .barra-movil {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+      background: var(--barra-fondo);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-top: 1px solid var(--borde);
+    }
+    .barra-movil a {
+      text-align: center; text-decoration: none; font-weight: 700; font-size: .9rem;
+      padding: 12px; border-radius: 12px;
+      background: var(--superficie-2); color: var(--texto);
+      border: 1px solid var(--borde);
+    }
+    .barra-movil a.principal { background: var(--rojo); border-color: var(--rojo); color: var(--texto-sobre-rojo); }
+
+    /* ===== ANIMACIONES ===== */
+    @keyframes flotar { 0%,100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 6px); } }
+    @keyframes entrar { from { opacity: 0; transform: scale(.85) rotate(-6deg); } to { opacity: 1; transform: none; } }
+    .revelar { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .revelar.visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .logo, .bajar { animation: none; }
+      .revelar { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ===== CELULARES CHICOS ===== */
+    @media (max-width: 380px) {
+      .nav-links { gap: 12px; }
+      .nav-links a { font-size: .78rem; }
+    }
+
+    /* ===== PC (segundo plano por ahora) ===== */
+    @media (min-width: 760px) {
+      body { padding-bottom: 0; }
+      .barra-movil { display: none; }
+      section { padding: 90px 0; }
+      .platos { grid-template-columns: 1fr 1fr; }
+      .pasos { grid-template-columns: repeat(3, 1fr); }
+      .nosotros-grid { grid-template-columns: 1.2fr 1fr; gap: 48px; }
+      .nosotros-foto { max-width: 440px; justify-self: end; }
+      .ubicacion-grid { grid-template-columns: 1.4fr 1fr; align-items: stretch; }
+      .mapa { height: 100%; min-height: 340px; }
+      .contacto-botones { grid-template-columns: 1fr 1fr; max-width: 520px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <nav class="nav">
+    <div class="contenedor">
+      <a href="#inicio" class="nav-marca"><img src="img/logo.webp" alt="" class="nav-logo" width="40" height="40">PiCNiC</a>
+      <ul class="nav-links">
+        <li><a href="#menu">Menú</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#ubicacion">Dónde</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== HERO: LOGO + APERTURA ===== -->
+  <header class="hero" id="inicio">
+    <img class="logo" src="img/logo.webp" alt="Picnic — Hamburguesas, lomitos, bondiolas, choripán, panchos y papas. A. Mathews 144, Trelew" width="800" height="800">
+
+    <p class="hero-sub">Hamburguesas, lomitos, bondiolas, choripán, panchos y papas. Rico, rápido y hecho en el momento.</p>
+    <a href="#menu" class="bajar" aria-label="Bajar al menú">↓</a>
+  </header>
+
+  <main>
+    <!-- ===== MENÚ ===== -->
+    <section id="menu">
+      <div class="contenedor">
+        <div class="menu-cabecera revelar">
+          <p class="eyebrow">La carta</p>
+          <h2>Nuestro <span class="acento">menú</span></h2>
+          <p>Pedís en el mostrador, te damos tu beeper y cuando vibra, pasás a buscar.</p>
+        </div>
+
+
+        <!-- Hamburguesas -->
+        <div class="categoria revelar" id="hamburguesas">
+          <h3 class="categoria-titulo"><span class="emoji">🍔</span> Hamburguesas</h3>
+          <div class="platos">
+            <article class="plato destacado">
+              <span class="sello">La de la casa</span>
+              <div class="plato-cabeza"><h3>Hamburguesa Picnic</h3><span class="precio">$13.500</span></div>
+              <p>Doble medallón smash, doble cheddar, panceta crocante, cebolla caramelizada y salsa Picnic en pan de papa.</p>
+            </article>
+            <article class="plato destacado">
+              <span class="sello">Para valientes</span>
+              <div class="plato-cabeza"><h3>La de Gonza</h3><span class="precio">$16.900</span></div>
+              <p>Triple medallón, triple cheddar, huevo a la plancha, panceta y barbacoa ahumada.</p>
+            </article>
+            <article class="plato">
+              <div class="plato-cabeza"><h3>Clásica</h3><span class="precio">$9.500</span></div>
+              <p>Medallón de carne, queso, lechuga, tomate y mayonesa.</p>
+            </article>
+            <article class="plato">
+              <div class="plato-cabeza"><h3>Cheddar Bacon</h3><span class="precio">$12.500</span></div>
+              <p>Doble medallón, cheddar fundido, panceta y pepinos.</p>
+            </article>
+          </div>
+        </div>
+
+        <!-- Lomitos -->
+        <div class="categoria revelar" id="lomitos">
+          <h3 class="categoria-titulo"><span class="emoji">🥖</span> Lomitos</h3>
+          <div class="platos">
+            <article class="plato">
+              <div class="plato-cabeza"><h3>Lomito completo</h3><span class="precio">$15.900</span></div>
+              <p>Lomo a la plancha, jamón, queso, huevo, lechuga, tomate y mayonesa.</p>
+            </article>
+            <article class="plato">
+              <div class="plato-cabeza"><h3>Lomito sureño</h3><span class="precio">$16.500</span></div>
+              <p>Lomo, provoleta, morrones asados, cebolla grillada y chimichurri.</p>
+            </article>
+          </div>
+        </div>
+
+        <!-- Bondiolas -->
+        <div class="categoria revelar" id="bondiolas">
+          <h3 class="categoria-titulo"><span class="emoji">🥩</span> Bondiolas</h3>
+          <div class="platos">
+            <article class="plato">
+              <div class="plato-cabeza"><h3>Bondiola desmechada</h3><span class="precio">$13.900</span></div>
+              <p>Bondiola braseada, barbacoa, cebolla crispy y coleslaw.</p>
+            </article>
+            <article class="plato">
+              <div class="plato-cabeza"><h3>Bondiola clásica</h3><span class="precio">$12.900</span></div>
+              <p>Bondiola a la plancha, provoleta, rúcula y chimichurri.</p>
+            </article>
+          </div>
+        </div>
+
+        <!-- Choripán -->
+        <div class="categoria revelar" id="choripan">
+          <h3 class="categoria-titulo"><span class="emoji">🔥</span> Choripán</h3>
+          <div class="platos">
+            <article class="plato">
+              <div class="plato-cabeza"><h3>Choripán clásico</h3><span class="precio">$7.500</span></div>
+              <p>Chorizo parrillero, chimichurri y salsa criolla.</p>
+            </article>
+            <article class="plato">
+              <div class="plato-cabeza"><h3>Choripán completo</h3><span class="precio">$9.500</span></div>
+              <p>Chorizo, provoleta, morrones asados y criolla.</p>
+            </article>
+          </div>
+        </div>
+
+        <!-- Panchos -->
+        <div class="categoria revelar" id="panchos">
+          <h3 class="categoria-titulo"><span class="emoji">🌭</span> Panchos</h3>
+          <div class="platos">
+            <article class="plato destacado">
+              <span class="sello">Recomendado</span>
+              <div class="plato-cabeza"><h3>Pancho a la Patagonia</h3><span class="precio">$6.500</span></div>
+              <p>Salchicha alemana ahumada, panceta, cebolla caramelizada, papas pay y salsa de ahumados.</p>
+            </article>
+            <article class="plato">
+              <div class="plato-cabeza"><h3>Pancho clásico</h3><span class="precio">$3.900</span></div>
+              <p>Salchicha, pan de viena y los aderezos que quieras.</p>
+            </article>
+            <article class="plato">
+              <div class="plato-cabeza"><h3>Pancho con queso y papas pay</h3><span class="precio">$4.900</span></div>
+              <p>Salchicha, cheddar fundido y papas pay crocantes.</p>
+            </article>
+          </div>
+        </div>
+
+        <!-- Papas -->
+        <div class="categoria revelar" id="papas">
+          <h3 class="categoria-titulo"><span class="emoji">🍟</span> Papas fritas</h3>
+          <div class="platos">
+            <article class="plato destacado">
+              <span class="sello">Receta secreta</span>
+              <div class="plato-cabeza"><h3>Papas con salsa Noe</h3><span class="precio">$8.900</span></div>
+              <p>Papas fritas con cheddar fundido, panceta, verdeo y la salsa secreta de Noe.</p>
+            </article>
+            <article class="plato">
+              <div class="plato-cabeza"><h3>Papas clásicas</h3><span class="precio">$5.500</span></div>
+              <p>Porción de papas fritas, crocantes por fuera y suaves por dentro.</p>
+            </article>
+            <article class="plato">
+              <div class="plato-cabeza"><h3>Papas rústicas a la provenzal</h3><span class="precio">$6.500</span></div>
+              <p>Con cáscara, ajo y perejil.</p>
+            </article>
+          </div>
+        </div>
+
+        <p class="aviso-precios">Precios de ejemplo, sujetos a cambios. La carta definitiva se publica antes de la apertura.</p>
+      </div>
+    </section>
+
+    <!-- ===== NOSOTROS ===== -->
+    <section class="nosotros" id="nosotros">
+      <div class="contenedor">
+        <div class="nosotros-grid">
+        <div class="nosotros-texto revelar">
+          <p class="eyebrow">Nosotros</p>
+          <h2>Comida de <span class="acento">picnic</span>, sin vueltas</h2>
+          <p>Picnic nace en Trelew con una idea simple: lo que pedís sale rápido, sale caliente y sale bien. Carne a la plancha, pan fresco y porciones que se sienten, para llevar a casa, a la plaza o adonde vos quieras armar tu picnic.</p>
+        </div>
+          <figure class="nosotros-foto revelar">
+            <img src="img/combo.webp" alt="Combo Picnic: hamburguesas envueltas, papas fritas y gaseosas con los stickers del local" width="960" height="1092" loading="lazy">
+          </figure>
+        </div>
+
+        <div class="pasos">
+          <div class="paso revelar">
+            <div class="paso-num">1</div>
+            <div><h3>Pedís en el mostrador</h3><p>Elegís de la carta y pagás en el momento.</p></div>
+          </div>
+          <div class="paso revelar">
+            <div class="paso-num">2</div>
+            <div><h3>Te damos tu beeper</h3><p>Te llevás un aparatito con tu número de pedido.</p></div>
+          </div>
+          <div class="paso revelar">
+            <div class="paso-num">3</div>
+            <div><h3>Vibra y retirás</h3><p>Cuando suena o vibra, tu pedido está listo en el mostrador.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== UBICACIÓN ===== -->
+    <section id="ubicacion">
+      <div class="contenedor">
+        <div class="revelar">
+          <p class="eyebrow">Dónde estamos</p>
+          <h2>Vení a <span class="acento">buscarlo</span></h2>
+        </div>
+
+        <div class="ubicacion-grid">
+          <iframe class="mapa revelar"
+            src="https://maps.google.com/maps?q=A.+Mathews+144,+Trelew,+Chubut,+Argentina&z=16&output=embed"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            title="Mapa: Picnic, A. Mathews 144, Trelew"></iframe>
+
+          <div class="datos">
+            <div class="dato revelar">
+              <span class="ico">📍</span>
+              <div><small>Dirección</small><strong>A. Mathews 144, Trelew, Chubut</strong></div>
+            </div>
+            <div class="dato revelar">
+              <span class="ico">🕖</span>
+              <div><small>Horarios</small><strong>Martes a domingo · 19:30 a 00:30</strong> <span class="falta">a confirmar</span></div>
+            </div>
+            <div class="dato revelar">
+              <span class="ico">🛍️</span>
+              <div><small>Modalidad</small><strong>Solo retiro en el local</strong></div>
+            </div>
+            <a class="boton revelar" target="_blank" rel="noopener"
+               href="https://www.google.com/maps/search/?api=1&query=A.+Mathews+144,+Trelew,+Chubut">Cómo llegar</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACTO ===== -->
+    <section class="contacto" id="contacto">
+      <div class="contenedor revelar">
+        <p class="eyebrow">Contacto</p>
+        <h2>Hablemos</h2>
+        <p>¿Consultas, eventos o pedidos grandes? Escribinos.</p>
+        <div class="contacto-botones">
+          <!-- REEMPLAZAR: número real con 549 + característica sin 0 + número sin 15 -->
+          <a class="boton" href="https://wa.me/5492800000000" target="_blank" rel="noopener">WhatsApp <span class="falta" style="color:#111;border-color:#111">a confirmar</span></a>
+          <!-- REEMPLAZAR: usuario real de Instagram -->
+          <a class="boton boton-linea" href="https://instagram.com/picnic.trelew" target="_blank" rel="noopener">@picnic.trelew <span class="falta">a confirmar</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="contenedor">
+      <span class="nav-marca">PiCNiC</span>
+      <p>A. Mathews 144 · Trelew, Chubut</p>
+      <p>© <span id="anio"></span> Picnic. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Barra fija para el celular -->
+  <div class="barra-movil">
+    <a href="#menu">Ver menú</a>
+    <a class="principal" target="_blank" rel="noopener"
+       href="https://www.google.com/maps/search/?api=1&query=A.+Mathews+144,+Trelew,+Chubut">📍 Cómo llegar</a>
+  </div>
+
+  <script>
+    // ===== APARECER AL HACER SCROLL =====
+    const aparecer = new IntersectionObserver(entradas => {
+      entradas.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); aparecer.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.revelar').forEach(el => aparecer.observe(el));
+
+    document.getElementById('anio').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
